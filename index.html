@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SATPAM BOK | UPTD Puskesmas Sawan II</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="brand-mark">BOK</div><div><b>SATPAM BOK</b><small>UPTD Puskesmas Sawan II</small></div></div>
+  <nav>
+    <button class="nav active" data-page="dashboard">▦ <span>Dashboard</span></button>
+    <button class="nav" data-page="spj">▤ <span>Data SPJ</span></button>
+    <button class="nav" data-page="input">＋ <span>Input SPJ</span></button>
+    <button class="nav" data-page="verifikasi">✓ <span>Verifikasi Dokumen</span></button>
+    <button class="nav" data-page="laporan">▥ <span>Laporan & Rekap</span></button>
+    <button class="nav" data-page="panduan">ⓘ <span>Panduan</span></button>
+  </nav>
+  <div class="side-foot">Sistem Monitoring Kelengkapan<br>SPJ Bantuan Operasional Kesehatan</div>
+</aside>
+<main>
+<header><div><div class="eyebrow">PENGELOLAAN DANA BOK</div><h1 id="pageTitle">Dashboard Monitoring</h1></div><div class="head-right"><span class="live">● TERHUBUNG</span><select id="yearFilter"><option value="2026">Tahun 2026</option><option value="2025">Tahun 2025</option><option value="2027">Tahun 2027</option></select><button class="btn outline" id="refresh">↻ Muat ulang</button></div></header>
+<section id="dashboard" class="page show">
+  <div class="welcome"><div><span class="eyebrow light">MONITORING REALISASI & DOKUMEN</span><h2>Kelola SPJ BOK lebih tertib,<br>cepat, dan transparan.</h2><p>Pantau realisasi anggaran dan kelengkapan dokumen pertanggungjawaban dalam satu dashboard.</p></div><div class="welcome-icon">▤</div></div>
+  <div class="stats">
+    <article class="stat"><span>Total Pagu Anggaran</span><b id="pagu">Rp0</b><small>Anggaran tahun terpilih</small></article>
+    <article class="stat"><span>Total Realisasi</span><b id="realisasi">Rp0</b><small id="persen">0% dari pagu</small></article>
+    <article class="stat"><span>SPJ Terinput</span><b id="jumlah">0</b><small>Transaksi tercatat</small></article>
+    <article class="stat"><span>Dokumen Lengkap</span><b id="lengkap">0</b><small id="belum">0 perlu dilengkapi</small></article>
+  </div>
+  <div class="grid-two"><article class="panel"><div class="panel-head"><div><h3>Realisasi Anggaran</h3><p>Perbandingan pagu dan realisasi</p></div></div><canvas id="budgetChart" height="150"></canvas></article><article class="panel"><div class="panel-head"><div><h3>Status Kelengkapan SPJ</h3><p>Posisi dokumen seluruh transaksi</p></div></div><canvas id="statusChart" height="150"></canvas></article></div>
+  <article class="panel"><div class="panel-head"><div><h3>SPJ Terbaru</h3><p>Data pertanggungjawaban yang terakhir dicatat</p></div><button class="btn outline" data-go="spj">Lihat semua →</button></div><div class="table-wrap"><table><thead><tr><th>Tanggal</th><th>Kegiatan</th><th>Uraian</th><th>Nilai</th><th>Status</th></tr></thead><tbody id="recentRows"><tr><td colspan="5" class="empty">Memuat data...</td></tr></tbody></table></div></article>
+</section>
+<section id="spj" class="page">
+ <div class="toolbar"><input id="searchSPJ" placeholder="Cari nomor, kegiatan, uraian..."><select id="filterStatus"><option value="">Semua status</option><option>Belum Diperiksa</option><option>Lengkap</option><option>Tidak Lengkap</option><option>Perlu Perbaikan</option></select></div>
+ <article class="panel"><div class="panel-head"><div><h3>Daftar Pertanggungjawaban SPJ</h3><p>Seluruh transaksi pada tahun terpilih</p></div><button class="btn primary" data-go="input">＋ Tambah SPJ</button></div><div class="table-wrap"><table><thead><tr><th>No. SPJ</th><th>Tanggal</th><th>Kegiatan</th><th>Jenis Belanja</th><th>Nilai</th><th>Kelengkapan</th><th>Aksi</th></tr></thead><tbody id="spjRows"></tbody></table></div></article>
+</section>
+<section id="input" class="page">
+ <article class="panel form-panel"><div class="panel-head"><div><h3>Input Data SPJ</h3><p>Lengkapi informasi transaksi dan unggah dokumen pendukung</p></div></div>
+ <form id="spjForm">
+ <div class="form-grid">
+  <label>Nomor SPJ<input name="nomor" required placeholder="Contoh: SPJ-BOK/001/2026"></label>
+  <label>Tanggal SPJ<input name="tanggal" type="date" required></label>
+  <label>Periode Bulan<select name="bulan" required><option value="">Pilih bulan</option><option>Januari</option><option>Februari</option><option>Maret</option><option>April</option><option>Mei</option><option>Juni</option><option>Juli</option><option>Agustus</option><option>September</option><option>Oktober</option><option>November</option><option>Desember</option></select></label>
+  <label>Nama Kegiatan<input name="kegiatan" required placeholder="Nama kegiatan BOK"></label>
+  <label>Program / Subkegiatan<input name="program" placeholder="Program atau subkegiatan"></label>
+  <label>Sumber Dana<select name="sumber" required><option value="">Pilih sumber dana</option><option>BOK</option><option>BOK Puskesmas</option><option>Lainnya</option></select></label>
+  <label>Jenis Belanja<select name="jenis" required><option value="">Pilih jenis belanja</option><option>Belanja Barang dan Jasa</option><option>Belanja Perjalanan Dinas</option><option>Belanja Bahan</option><option>Belanja Jasa</option><option>Lainnya</option></select></label>
+  <label>Nilai SPJ (Rp)<input name="nilai" type="number" min="0" required placeholder="0"></label>
+  <label>Penanggung Jawab<input name="pj" required placeholder="Nama penanggung jawab"></label>
+  <label class="wide">Uraian transaksi<textarea name="uraian" rows="2" required placeholder="Jelaskan rincian penggunaan dana"></textarea></label>
+  <label class="wide">Unggah dokumen SPJ (PDF/JPG/PNG)<input name="dokumen" type="file" accept=".pdf,.jpg,.jpeg,.png" multiple><small>Maksimal 8 MB per file. Dokumen akan disimpan di Google Drive.</small></label>
+ </div>
+ <div class="checklist-box"><b>Checklist dokumen pendukung</b><p>Tandai dokumen yang sudah tersedia. Verifikator tetap melakukan pemeriksaan akhir.</p><div class="checks" id="inputChecks"></div></div>
+ <div class="form-actions"><button type="reset" class="btn outline">Reset</button><button type="submit" class="btn primary" id="saveBtn">Simpan Data SPJ</button></div>
+ </form></article>
+</section>
+<section id="verifikasi" class="page"><article class="panel"><div class="panel-head"><div><h3>Verifikasi Kelengkapan Dokumen</h3><p>Pilih transaksi untuk memeriksa checklist dan menetapkan status</p></div></div><div class="table-wrap"><table><thead><tr><th>Nomor SPJ</th><th>Kegiatan</th><th>Nilai</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="verifyRows"></tbody></table></div></article><article class="panel" id="verifyDetail" hidden></article></section>
+<section id="laporan" class="page"><article class="panel"><div class="panel-head"><div><h3>Rekapitulasi Monitoring</h3><p>Ringkasan SPJ berdasarkan tahun terpilih</p></div><button class="btn primary" id="exportCsv">↓ Ekspor CSV</button></div><div id="reportSummary" class="report-cards"></div><div class="table-wrap"><table><thead><tr><th>Bulan</th><th>Jumlah SPJ</th><th>Realisasi</th><th>Lengkap</th><th>Belum Lengkap</th></tr></thead><tbody id="monthlyRows"></tbody></table></div></article></section>
+<section id="panduan" class="page"><article class="panel guide"><h3>Panduan Penggunaan SATPAM BOK</h3><ol><li>Admin menyiapkan database Google Sheets dan folder Google Drive melalui petunjuk instalasi.</li><li>Operator memilih menu <b>Input SPJ</b>, mengisi data transaksi, mencentang dokumen yang tersedia, lalu mengunggah berkas.</li><li>Verifikator membuka menu <b>Verifikasi Dokumen</b>, memeriksa berkas dan menetapkan status.</li><li>Pimpinan memantau pagu, realisasi, dan status kelengkapan melalui dashboard serta laporan.</li></ol><div class="notice"><b>Catatan keamanan:</b> Jangan menyimpan kredensial atau token rahasia di repository GitHub. Batasi akses Google Drive dan spreadsheet hanya kepada petugas berwenang. Data contoh dan konfigurasi awal harus disesuaikan dengan ketentuan pengelolaan BOK yang berlaku.</div></article></section>
+<footer>SATPAM BOK · UPTD Puskesmas Sawan II Kabupaten Buleleng <span>© 2026</span></footer>
+</main></div>
+<div id="toast" class="toast"></div>
+<script src="config.js"></script><script src="app.js"></script>
+</body></html>
